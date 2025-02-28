@@ -22,9 +22,15 @@ SELECT
     CAST(TA_AVG AS FLOAT) AS avg_temperature,    
     CAST(TA_MAX AS FLOAT) AS max_temperature,    
     CAST(TA_MIN AS FLOAT) AS min_temperature,    
-    CAST(RN_DAY AS FLOAT) AS daily_rainfall,
-    CAST(SD_NEW AS FLOAT) AS new_snowfall        
-FROM weather_data
+    CASE 
+      WHEN CAST(RN_DAY AS FLOAT) = -9 THEN 0 
+      ELSE CAST(RN_DAY AS FLOAT) 
+    END AS daily_rainfall,
+    CASE 
+      WHEN CAST(SD_NEW AS FLOAT) = -9 THEN 0 
+      ELSE CAST(SD_NEW AS FLOAT) 
+    END AS new_snowfall        
+  FROM weather_data
 """)
 
 # 결과 저장 (Parquet 형식)
